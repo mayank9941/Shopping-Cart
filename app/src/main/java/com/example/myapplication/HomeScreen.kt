@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 
-
+// Composable function to create the Home screen
 @Composable
 fun HomeScreen(navController: NavController){
     Column(
@@ -21,7 +21,9 @@ fun HomeScreen(navController: NavController){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Image composable to display a shopping cart image
        Image(painter = painterResource(id = R.drawable.download), contentDescription ="Shopping Cart" )
+        // Button to navigate to the Vegetable screen when clicked
         Button(onClick = { navController.navigate(Screen.VegetableScreen.route)}) {
             Text(text = "Start Shopping")
         }

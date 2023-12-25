@@ -32,19 +32,31 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
+// Composable function to create the Fruit Shopping screen
 @Composable
-fun FruitShoppingScreen(navController: NavController,setFruitList: (List<String>)->Unit,fruitList:List<String>) {
+fun FruitShoppingScreen(navController: NavController // Navigation controller for navigating between screens
+                        ,setFruitList: (List<String>)->Unit // Function to set the fruit list externally
+                        ,fruitList:List<String> // List of fruits for the shopping screen
+)
+{
+    // Scaffold is a Material Design component providing basic layout structure
     Scaffold(
         topBar = {
+            // TopAppBar is the top bar of the screen
             TopAppBar(
+                // Setting colors for the app bar
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
+                // Title of the app bar
                 title = {
                     Text("Fruits")
-                },navigationIcon = {
+                },
+                // Navigation icon to go back
+                navigationIcon = {
                     IconButton(onClick = {
+                        // Navigate back to the Vegetable screen
                         navController.navigate(Screen.VegetableScreen.route)
 
                     }) {
@@ -53,11 +65,13 @@ fun FruitShoppingScreen(navController: NavController,setFruitList: (List<String>
             )
         }
     ) { innerPadding ->
+        // Column is a vertical arrangement of UI elements
         Column(
             modifier = Modifier
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            // Row for displaying the column headers "Items" and "Price/Kg"
             Row(horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier= Modifier
@@ -67,7 +81,9 @@ fun FruitShoppingScreen(navController: NavController,setFruitList: (List<String>
                 Text(text = "Items", fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 145.dp))
                 Text(text = "Price/Kg", fontSize = 20.sp, fontWeight = FontWeight.Bold)
             }
+            // FruitsList is a custom composable function to display the list of fruits
             FruitsList(fruitList,setFruitList)
+            // Row for buttons (Cancel and Next)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -76,13 +92,16 @@ fun FruitShoppingScreen(navController: NavController,setFruitList: (List<String>
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.Bottom
             ){
+                // OutlinedButton for Cancel action
                 OutlinedButton(modifier = Modifier.weight(1f), onClick ={
+                    // Clear the fruit list and navigate to the HomeScreen
                     setFruitList.invoke(listOf("clear"))
                     navController.navigate(Screen.HomeScreen.route)
 
                 } ) {
                     Text("Cancel")
                 }
+                // Button for Next action, navigating to the Billing screen
                 Button(
                     modifier = Modifier.weight(1f),
 

@@ -41,8 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.Vegetable as Vegetable1
 
+// Data class representing a Vegetable with name and price
 data class Vegetable(val name:String,val price:String)
 
+// List of predefined vegetables with their names and prices
 val Vegetables = listOf<Vegetable1>(
 
     Vegetable1(name = "Tomato",price="RS 25"),
@@ -55,7 +57,7 @@ val Vegetables = listOf<Vegetable1>(
     Vegetable1(name = "Cabbage", price = "RS 37")
 
 )
-
+// Composable function to display a list of vegetables
 @Composable
 fun VegetablesList(setVegList: (List<String>) -> Unit,vegList:List<String>) {
 
@@ -65,9 +67,10 @@ fun VegetablesList(setVegList: (List<String>) -> Unit,vegList:List<String>) {
             .padding(horizontal = 20.dp)
 
     ) {
+        // Displaying each vegetable in the list using the 'vegetable' composable function
         items(Vegetables) { vegetable ->
             vegetable(vegList,name = vegetable.name, price = vegetable.price) { checked ->
-
+                // When the checkbox state changes, update the vegetable list
                     setVegList.invoke(listOf(vegetable.name+","+vegetable.price)) // Add the vegetable name to the list
 
 
@@ -81,7 +84,7 @@ fun VegetablesList(setVegList: (List<String>) -> Unit,vegList:List<String>) {
 @Composable
 fun vegetable(vegList: List<String>, name: String, price: String, onCheckedChange: (Boolean) -> Unit){
     val checkedState = remember { mutableStateOf(vegList.contains(name+','+price)) }
-
+    // Row is a composable that places its children in a horizontal row
     Row(horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -89,12 +92,16 @@ fun vegetable(vegList: List<String>, name: String, price: String, onCheckedChang
             .background(color = Color.White)
 
             ) {
+        // Checkbox composable for selecting the vegetable
         Checkbox(checked =checkedState.value
-            , onCheckedChange ={checkedState.value=it
+            , onCheckedChange =
+            // Update the checked state and invoke the callback
+            {checkedState.value=it
                 onCheckedChange.invoke(it)
                                },
             colors = CheckboxDefaults.colors(Color.Blue)
         )
+        // Displaying the name and price of the vegetable
         Text(text = name, fontSize = 20.sp)
         Text(text = price, fontSize = 20.sp)
     }
